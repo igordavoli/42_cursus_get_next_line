@@ -4,8 +4,7 @@ NAME = get_next_line.a
 
 CC = clang
 
-CFLAGS = -Wall -Wextra -Werror
-# -D BUFFER_SIZE=xx
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=500
 
 SRC = ./get_next_line.c \
 	./get_next_line_utils.c
@@ -30,4 +29,4 @@ fclean:
 	@rm -rf *.o $(NAME) .tests.out
 
 re:
-	make fclean && make all
+	@make fclean && make all
