@@ -6,7 +6,7 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/09/29 22:19:13 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/09/29 22:40:42 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ char	*get_next_line(int fd)
 	while (!line_end && bytes_readed)
 	{
 		bytes_readed = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_readed < 1)
+		if (bytes_readed == 0)
 		{
-			// line = ft_strdup(static_buff);
-			free(buffer);
-			return (NULL);
+			line = ft_strdup(buffer);
+			break;
 		}
 		buffer[bytes_readed] = '\0';
 		if (static_buff)
@@ -51,8 +50,6 @@ char	*get_next_line(int fd)
 		else
 			static_buff = ft_strdup(buffer);
 	}
-	// if (*line == '\0')
-	// 	line = (NULL);
 	free(buffer);
 	return (line);
 }
