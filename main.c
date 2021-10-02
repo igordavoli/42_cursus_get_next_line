@@ -6,7 +6,7 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/18 01:01:59 by faguilar          #+#    #+#             */
-/*   Updated: 2021/09/30 18:23:32 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/01 21:32:26 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(void)
 	int		i;
 	char	*line;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("text1.txt", O_RDONLY);
 	i = 0;
 	while (i < 11)
 	{
