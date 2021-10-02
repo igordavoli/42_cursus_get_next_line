@@ -2,7 +2,7 @@
 
 NAME = get_next_line.a
 
-CC = clang
+CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=500
 
@@ -17,16 +17,20 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 
 tests_run: $(NAME) main.c
-	@$(CC) $(CFLAGS) main.c $(NAME) -o test.out
+	@$(CC) $(CFLAGS) -fsanitize=address main.c $(NAME) -o test.out
 	@./test.out
 	@make fclean
 	@rm test.out
+test: $(NAME) main.c
+	@$(CC) $(CFLAGS) main.c $(NAME) -o test.out
+	@./test.out
+	@make clean
 
 clean:
 	@rm -rf *.o
 
 fclean:
-	@rm -rf *.o $(NAME) .tests.out
+	@rm -rf *.o $(NAME) *.out
 
 re:
 	@make fclean && make all

@@ -6,7 +6,7 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/26 00:36:15 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/09/27 01:17:18 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/01 20:13:05 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,20 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(bstr, s1, s1len + 1);
 	ft_strlcat(bstr, s2, s1len + s2len + 1);
 	return (bstr);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	unsigned char	ch;
+	size_t			s_size;
+
+	ch = c;
+	s_size = ft_strlen(s) + 1;
+	while (s_size--)
+	{
+		if (*s == ch)
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
 }
