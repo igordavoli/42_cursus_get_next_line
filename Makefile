@@ -2,9 +2,9 @@
 
 NAME = get_next_line.a
 
-CC = gcc
+CC = clang
 
-CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=500
+CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=4
 
 SRC = ./get_next_line.c \
 	./get_next_line_utils.c
@@ -21,9 +21,14 @@ tests_run: $(NAME) main.c
 	@./test.out
 	@make fclean
 	@rm test.out
-test: $(NAME) main.c
+
+val: $(NAME) main.c
 	@$(CC) $(CFLAGS) main.c $(NAME) -o test.out
-	@./test.out
+	@valgrind --leak-check=full --show-leak-kinds=all -s ./test.out
+	@make clean
+
+debug: $(NAME) main.c
+	@$(CC) $(CFLAGS) -g main.c $(NAME)
 	@make clean
 
 clean:
@@ -34,3 +39,4 @@ fclean:
 
 re:
 	@make fclean && make all
+#

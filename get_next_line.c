@@ -6,78 +6,130 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/10/01 21:11:29 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/03 18:16:42 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*ft_strjoin_f(char **s1, char *s2)
+{
+	char	*bstr;
+	size_t	s1len;
+	size_t	s2len;
 
-// char *get_line(int fd, char *buffer, int BUFFER_SIZE, char *static_buff)
-// {
+	if (!(*s1) || !s2)
+		return (NULL);
+	s1len = 0;
+	while ((*s1)[s1len])
+		s1len++;
+	s2len = 0;
+	while (s2[s2len])
+		s2len++;
+	bstr = (char *)malloc(s1len + s2len + 1);
+	if (!bstr)
+		return (NULL);
+	ft_strlcpy(bstr, *s1, s1len + 1);
+	ft_strlcat(bstr, s2, s1len + s2len + 1);
+	free(*s1);
+	*s1 = NULL;
+	return (bstr);
+}
 
-// }
+static char	*ft_substr_f(char *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	remmsub;
+	size_t	s_len;
+
+	if (!s)
+		return (NULL);
+	s_len = 0;
+	while (s[s_len])
+		s_len++;
+	remmsub = s_len - start;
+	if (start <= s_len)
+	{
+		if (remmsub > len)
+			sub = (char *)malloc(sizeof(char) * len + 1);
+		else
+			sub = (char *)malloc(sizeof(char) * remmsub + 1);
+		if (!sub)
+			return (NULL);
+		ft_strlcpy(sub, &s[start], len + 1);
+	}
+	else
+		sub = ft_strdup("");
+	free(s);
+	s = NULL;
+	return (sub);
+}
+
+static char	*extract_line(char *buffer, char **static_buff, ssize_t read_bytes)
+{
+	char		*line;
+	char		*line_end;
+
+	if (*static_buff)
+		line = ft_strjoin_f(static_buff, buffer);
+	else
+		line = ft_strdup(buffer);
+	line_end = ft_strchr(line, '\n');
+	if (line_end)
+	{
+		*static_buff = ft_strdup(line_end + 1);
+		line = ft_substr_f(line, 0, line_end - line + 1);
+		return (line);
+	}
+	else if (read_bytes)
+	{
+		*static_buff = ft_strdup(line);
+		free(line);
+		line = NULL;
+	}
+	else if (*line)
+		return (line);
+	free(line);
+	return (NULL);
+}
+
+static char	*get_line(int fd, char *buffer)
+{
+	static char	*static_buff;
+	char		*line;
+	ssize_t		read_bytes;
+
+	read_bytes = 1;
+	line = NULL;
+	while (!line && read_bytes)
+	{
+		read_bytes = read(fd, buffer, BUFFER_SIZE);
+		if (read_bytes == -1)
+			return (NULL);
+		buffer[read_bytes] = '\0';
+		line = extract_line(buffer, &static_buff, read_bytes);
+		if (!read_bytes)
+			break ;
+	}
+	return (line);
+}
 
 char	*get_next_line(int fd)
 {
-	static char	*static_buff = NULL;
 	char		*buffer;
 	char		*line;
-	char		*swp;
-	char		*line_end;
-	size_t		line_len;
-	ssize_t		bytes_readed;
 
-	line_len = 0;
-	line_end = NULL;
-	if ((fd < 0) || BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (NULL);
-	while (!line_end)
+	if (read(fd, buffer, 0) < 0)
 	{
-		bytes_readed = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_readed == -1)
-		{
-			free(buffer);
-			return (NULL);
-		}
-		buffer[bytes_readed] = '\0';
-		if (!bytes_readed && ft_strlen(buffer))
-		{
-			line = ft_strdup(buffer);
-			free(static_buff);
-			break;
-		}
-		if (!bytes_readed && !ft_strlen(buffer))
-		{
-			free(buffer);
-			if (ft_strlen(static_buff))
-			{
-				line = ft_strdup(static_buff);
-				free(static_buff);
-				return (line);
-			}
-			return (NULL);
-		}
-		if (static_buff)
-		{
-			swp = buffer;
-			buffer = ft_strjoin(static_buff, buffer);
-			free(swp);
-			free(static_buff);
-		}
-		line_end = ft_strchr(buffer, '\n');
-		if (line_end)
-		{
-			line_len = line_end - buffer + 1;
-			line = ft_substr(buffer, 0, line_len);
-			static_buff = ft_strdup(line_end + 1);
-		}
-		else
-			static_buff = ft_strdup(buffer);
+		free(buffer);
+		return (NULL);
 	}
+	line = get_line(fd, buffer);
 	free(buffer);
 	return (line);
 }
