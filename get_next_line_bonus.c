@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/10/03 19:20:04 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/03 20:09:55 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_strjoin_f(char **s1, char *s2)
 {
@@ -93,9 +93,8 @@ static char	*extract_line(char *buffer, char **static_buff, ssize_t read_bytes)
 	return (NULL);
 }
 
-static char	*get_line(int fd, char *buffer)
+static char	*get_line(int fd, char *buffer, char **static_buff)
 {
-	static char	*static_buff;
 	char		*line;
 	ssize_t		read_bytes;
 
@@ -107,7 +106,7 @@ static char	*get_line(int fd, char *buffer)
 		if (read_bytes == -1)
 			return (NULL);
 		buffer[read_bytes] = '\0';
-		line = extract_line(buffer, &static_buff, read_bytes);
+		line = extract_line(buffer, static_buff, read_bytes);
 		if (!read_bytes)
 			break ;
 	}
@@ -116,6 +115,7 @@ static char	*get_line(int fd, char *buffer)
 
 char	*get_next_line(int fd)
 {
+	static char	*static_buff[FD_MAX];
 	char		*buffer;
 	char		*line;
 
@@ -129,7 +129,7 @@ char	*get_next_line(int fd)
 		free(buffer);
 		return (NULL);
 	}
-	line = get_line(fd, buffer);
+	line = get_line(fd, buffer, &static_buff[fd]);
 	free(buffer);
 	return (line);
 }

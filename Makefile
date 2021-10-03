@@ -9,7 +9,12 @@ CFLAGS = -Wall -Wextra -Werror -D BUFFER_SIZE=4
 SRC = ./get_next_line.c \
 	./get_next_line_utils.c
 
+SRC_B = ./get_next_line_bonus.c \
+	./get_next_line_utils_bonus.c
+
 OBJ = $(SRC:.c=.o)
+
+OBJ_B = $(SRC:.c=.o)
 
 all: $(NAME)
 
@@ -30,6 +35,11 @@ val: $(NAME) main.c
 debug: $(NAME) main.c
 	@$(CC) $(CFLAGS) -g main.c $(NAME)
 	@make clean
+
+bonus: $(OBJ_B)
+	@ar rcs get_next_line_bonus.a $(OBJ_B)
+	@$(CC) $(CFLAGS) -fsanitize=address main_b.c get_next_line_bonus.a  -o test_b.out
+	@./test_b.out
 
 clean:
 	@rm -rf *.o
