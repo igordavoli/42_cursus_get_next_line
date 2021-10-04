@@ -6,13 +6,13 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/10/03 20:09:55 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/04 00:59:58 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-char	*ft_strjoin_f(char **s1, char *s2)
+static char	*ft_strjoin_f(char **s1, char *s2)
 {
 	char	*bstr;
 	size_t	s1len;
@@ -115,11 +115,11 @@ static char	*get_line(int fd, char *buffer, char **static_buff)
 
 char	*get_next_line(int fd)
 {
-	static char	*static_buff[FD_MAX];
+	static char	*static_buff[FD_MAX + 1];
 	char		*buffer;
 	char		*line;
 
-	if (BUFFER_SIZE <= 0)
+	if (BUFFER_SIZE <= 0 || fd > FD_MAX)
 		return (NULL);
 	buffer = (char *)malloc(BUFFER_SIZE + 1);
 	if (!buffer)

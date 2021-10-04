@@ -6,13 +6,13 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/10/03 19:20:04 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/04 00:54:43 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strjoin_f(char **s1, char *s2)
+static char	*ft_strjoin_f(char **s1, char *s2)
 {
 	char	*bstr;
 	size_t	s1len;

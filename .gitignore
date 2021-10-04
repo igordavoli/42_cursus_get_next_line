@@ -1,6 +1,6 @@
 
-*.out
-*.o
-*.txtgit
+# *.out
+# *.o
+# *.txtgit
 gnlTester
 .vscode
