@@ -6,6 +6,6 @@
   <h1>get_next_line</h1>
 </div>
 
-# :sparkles: What's Get Next Line of 42?
+## :sparkles: What's Get Next Line of 42?
 
 Is a function to get one line a time of text in a archive or other souce thats generate a filedescriptor, like the standard input and output.
