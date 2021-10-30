@@ -3,7 +3,7 @@
 
 <div align="center">
   <img  src="https://game.42sp.org.br/static/assets/achievements/get_next_linem.png" />
-  <h1>42_cursus_get_next_line</h1>
+  <h1>get_next_line</h1>
 </div>
 
 # :sparkles: What's Get Next Line of 42?
