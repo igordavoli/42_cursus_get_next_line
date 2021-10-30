@@ -5,3 +5,7 @@
   <img  src="https://game.42sp.org.br/static/assets/achievements/get_next_linem.png" />
   <h1>42_cursus_get_next_line</h1>
 </div>
+
+# :sparkles: What's Get Next Line of 42?
+
+This is a fucntion to get next line of the text in a archive or other places thats generate a filedescription like the standard input and output.
