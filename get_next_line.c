@@ -6,7 +6,7 @@
 /*   By: idavoli- <idavoli-@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 23:31:22 by idavoli-          #+#    #+#             */
-/*   Updated: 2021/10/04 00:54:43 by idavoli-         ###   ########.fr       */
+/*   Updated: 2021/10/30 16:11:05 by idavoli-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,6 @@ static char	*get_line(int fd, char *buffer)
 			return (NULL);
 		buffer[read_bytes] = '\0';
 		line = extract_line(buffer, &static_buff, read_bytes);
-		if (!read_bytes)
-			break ;
 	}
 	return (line);
 }

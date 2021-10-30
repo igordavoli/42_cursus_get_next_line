@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-static void	*ft_memcpy( void *dst, const void *src, size_t n)
+ void	*ft_memcpy( void *dst, const void *src, size_t n)
 {
 	unsigned char	*d;
 	unsigned char	*s;

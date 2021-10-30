@@ -2,5 +2,5 @@
 # *.out
 # *.o
 # *.txtgit
-gnlTester
+*teste*
 .vscode
