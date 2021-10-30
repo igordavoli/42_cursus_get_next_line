@@ -8,4 +8,4 @@
 
 # :sparkles: What's Get Next Line of 42?
 
-This is a fucntion to get next line of the text in a archive or other places thats generate a filedescription like the standard input and output.
+Is a function to get one line a time of text in a archive or other souce thats generate a filedescriptor, like the standard input and output.
